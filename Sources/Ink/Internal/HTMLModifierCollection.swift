@@ -4,7 +4,7 @@
 *  MIT license, see LICENSE file for details
 */
 
-internal struct HTMLModifierCollection {
+public struct HTMLModifierCollection {
     private var modifiers: [Target : [HTMLModifier]]
 
     init(modifiers: [HTMLModifier]) {

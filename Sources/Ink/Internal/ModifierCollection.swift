@@ -7,7 +7,7 @@
 
 import Foundation
 
-internal struct ModifierCollection {
+public struct ModifierCollection {
     private var modifiers: [Target : [Modifier]]
 
     init(modifiers: [Modifier]) {

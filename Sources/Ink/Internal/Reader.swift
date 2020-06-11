@@ -4,7 +4,7 @@
 *  MIT license, see LICENSE file for details
 */
 
-internal struct Reader {
+public struct Reader {
     private let string: String
     private(set) var currentIndex: String.Index
 

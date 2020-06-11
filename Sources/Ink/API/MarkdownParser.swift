@@ -15,6 +15,11 @@
 /// To customize how this parser performs its work, attach
 /// a `Modifier` using the `addModifier` method.
 public struct MarkdownParser {
+    public struct ParsedFragment {
+        var fragment: Fragment
+        var rawString: Substring
+    }
+    
     private var htmlModifiers: HTMLModifierCollection
     private var fragmentModifiers: ModifierCollection
     
@@ -48,8 +53,18 @@ public struct MarkdownParser {
     }
 
     
-    public func customData(from markdown: String) -> Any {
-        parse(markdown)
+    public func customData(from markdown: String) -> [Any] {
+        let fragmentsTuple = self.fragments(from: markdown)
+        let fragments = fragmentsTuple.fragments
+        let urls = NamedURLCollection(urlsByName: fragmentsTuple.urlsByName)
+
+        var finalArray = [Any]()
+        for frag in fragments {
+            let customData = frag.fragment.any(usingURLs: urls, rawString: frag.rawString, applyingModifiers: fragmentModifiers)
+            finalArray.append(customData)
+        }
+        
+        return finalArray
     }
     
     /// Convert a Markdown string into HTML, discarding any metadata
@@ -90,11 +105,6 @@ public struct MarkdownParser {
 }
 
 private extension MarkdownParser {
-    struct ParsedFragment {
-        var fragment: Fragment
-        var rawString: Substring
-    }
-    
     func fragments(from markdown: String) -> (fragments: [ParsedFragment], urlsByName: [String: URL], metadata: Metadata?, titleHeading: Heading?) {
         var reader = Reader(string: markdown)
         var fragments = [ParsedFragment]()

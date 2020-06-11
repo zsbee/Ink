@@ -27,4 +27,9 @@ internal struct HorizontalLine: Fragment {
         // there is nothing to return here, just an empty string.
         ""
     }
+    
+    
+    func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
+        return -1
+    }
 }

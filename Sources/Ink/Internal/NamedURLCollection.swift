@@ -4,7 +4,7 @@
 *  MIT license, see LICENSE file for details
 */
 
-internal struct NamedURLCollection {
+public struct NamedURLCollection {
     private let urlsByName: [String : URL]
 
     init(urlsByName: [String : URL]) {

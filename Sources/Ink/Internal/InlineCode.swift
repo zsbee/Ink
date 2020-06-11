@@ -42,4 +42,9 @@ struct InlineCode: Fragment {
     func plainText() -> String {
         code
     }
+    
+    
+    func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
+        return -1
+    }
 }

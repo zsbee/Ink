@@ -161,6 +161,10 @@ internal struct List: Fragment {
             string.append(item.text.plainText())
         }
     }
+    
+    func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
+        return -1
+    }
 }
 
 private extension List {

@@ -79,6 +79,10 @@ struct Table: Fragment {
 
         return text
     }
+    
+    func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
+        return -1
+    }
 }
 
 private extension Table {

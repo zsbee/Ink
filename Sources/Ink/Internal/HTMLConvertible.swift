@@ -4,7 +4,7 @@
 *  MIT license, see LICENSE file for details
 */
 
-internal protocol HTMLConvertible {
+public protocol HTMLConvertible {
     func html(usingURLs urls: NamedURLCollection,
               modifiers: HTMLModifierCollection) -> String
 }

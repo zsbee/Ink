@@ -29,4 +29,9 @@ internal struct Image: Fragment {
     func plainText() -> String {
         link.plainText()
     }
+    
+    
+    func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
+        return -1
+    }
 }

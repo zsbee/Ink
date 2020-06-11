@@ -40,4 +40,8 @@ internal struct Blockquote: Fragment {
     func plainText() -> String {
         text.plainText()
     }
+    
+    func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
+        return -1
+    }
 }

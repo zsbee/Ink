@@ -4,7 +4,7 @@
 *  MIT license, see LICENSE file for details
 */
 
-internal protocol Readable {
+public protocol Readable {
     static func read(using reader: inout Reader) throws -> Self
 }
 

@@ -4,6 +4,6 @@
 *  MIT license, see LICENSE file for details
 */
 
-internal protocol HTMLModifiable {
+public protocol HTMLModifiable {
     var modifierTarget: Target { get }
 }

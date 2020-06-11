@@ -32,6 +32,11 @@ internal struct Heading: Fragment {
     func plainText() -> String {
         stripTrailingMarkers(from: text.plainText())
     }
+    
+    
+    func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
+        return -1
+    }
 }
 
 private extension Heading {

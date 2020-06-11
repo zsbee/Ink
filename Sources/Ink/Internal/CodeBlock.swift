@@ -5,7 +5,7 @@
 */
 
 internal struct CodeBlock: Fragment {
-    var modifierTarget: Modifier.Target { .codeBlocks }
+    var modifierTarget: Target { .codeBlocks }
 
     private static let marker: Character = "`"
 
@@ -48,7 +48,7 @@ internal struct CodeBlock: Fragment {
     }
 
     func html(usingURLs urls: NamedURLCollection,
-              modifiers: ModifierCollection) -> String {
+              modifiers: HTMLModifierCollection) -> String {
         let languageClass = language.isEmpty ? "" : " class=\"language-\(language)\""
         return "<pre><code\(languageClass)>\(code)</code></pre>"
     }

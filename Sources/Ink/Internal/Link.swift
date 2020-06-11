@@ -5,9 +5,9 @@
 */
 
 internal struct Link: Fragment {
-    var modifierTarget: Modifier.Target { .links }
+    var modifierTarget: Target { .links }
 
-    var target: Target
+    var target: LTarget
     var text: FormattedText
 
     static func read(using reader: inout Reader) throws -> Link {
@@ -29,7 +29,7 @@ internal struct Link: Fragment {
     }
 
     func html(usingURLs urls: NamedURLCollection,
-              modifiers: ModifierCollection) -> String {
+              modifiers: HTMLModifierCollection) -> String {
         let url = target.url(from: urls)
         let title = text.html(usingURLs: urls, modifiers: modifiers)
         return "<a href=\"\(url)\">\(title)</a>"
@@ -41,13 +41,13 @@ internal struct Link: Fragment {
 }
 
 extension Link {
-    enum Target {
+    enum LTarget {
         case url(URL)
         case reference(Substring)
     }
 }
 
-extension Link.Target {
+extension Link.LTarget {
     func url(from urls: NamedURLCollection) -> URL {
         switch self {
         case .url(let url):

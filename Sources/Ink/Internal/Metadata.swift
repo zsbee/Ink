@@ -43,7 +43,7 @@ internal struct Metadata: Readable {
         throw Reader.Error()
     }
 
-    func applyingModifiers(_ modifiers: ModifierCollection) -> Self {
+    func applyingModifiers(_ modifiers: HTMLModifierCollection) -> Self {
         var modified = self
 
         modifiers.applyModifiers(for: .metadataKeys) { modifier in

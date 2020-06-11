@@ -56,7 +56,7 @@ internal final class TextStyleMarker: Readable, HTMLConvertible {
     }
 
     func html(usingURLs urls: NamedURLCollection,
-              modifiers: ModifierCollection) -> String {
+              modifiers: HTMLModifierCollection) -> String {
         guard isValid else { return rawMarkers }
 
         let leadingTag: String

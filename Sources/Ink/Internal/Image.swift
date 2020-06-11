@@ -5,7 +5,7 @@
 */
 
 internal struct Image: Fragment {
-    var modifierTarget: Modifier.Target { .images }
+    var modifierTarget: Target { .images }
 
     private var link: Link
 
@@ -15,7 +15,7 @@ internal struct Image: Fragment {
     }
 
     func html(usingURLs urls: NamedURLCollection,
-              modifiers: ModifierCollection) -> String {
+              modifiers: HTMLModifierCollection) -> String {
         let url = link.target.url(from: urls)
         var alt = link.text.html(usingURLs: urls, modifiers: modifiers)
 

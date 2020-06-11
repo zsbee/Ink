@@ -7,7 +7,7 @@
 import Foundation
 
 struct Table: Fragment {
-    var modifierTarget: Modifier.Target { .tables }
+    var modifierTarget: Target { .tables }
 
     private var header: Row?
     private var rows = [Row]()
@@ -33,7 +33,7 @@ struct Table: Fragment {
     }
 
     func html(usingURLs urls: NamedURLCollection,
-              modifiers: ModifierCollection) -> String {
+              modifiers: HTMLModifierCollection) -> String {
         var html = ""
         let render: () -> String = { "<table>\(html)</table>" }
 
@@ -146,7 +146,7 @@ private extension Table {
     func html(forRow row: Row,
               cellElementName: String,
               urls: NamedURLCollection,
-              modifiers: ModifierCollection) -> String {
+              modifiers: HTMLModifierCollection) -> String {
         var html = "<tr>"
 
         for index in 0..<columnCount {

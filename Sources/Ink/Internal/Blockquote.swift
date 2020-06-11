@@ -5,7 +5,7 @@
 */
 
 internal struct Blockquote: Fragment {
-    var modifierTarget: Modifier.Target { .blockquotes }
+    var modifierTarget: Target { .blockquotes }
 
     private var text: FormattedText
 
@@ -32,7 +32,7 @@ internal struct Blockquote: Fragment {
     }
 
     func html(usingURLs urls: NamedURLCollection,
-              modifiers: ModifierCollection) -> String {
+              modifiers: HTMLModifierCollection) -> String {
         let body = text.html(usingURLs: urls, modifiers: modifiers)
         return "<blockquote><p>\(body)</p></blockquote>"
     }

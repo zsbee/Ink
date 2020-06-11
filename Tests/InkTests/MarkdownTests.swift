@@ -69,10 +69,10 @@ final class MarkdownTests: XCTestCase {
 
     func testMetadataModifiers() {
         let parser = MarkdownParser(modifiers: [
-            Modifier(target: .metadataKeys) { key, _ in
+            HTMLModifier(target: .metadataKeys) { key, _ in
                 "ModifiedKey-" + key
             },
-            Modifier(target: .metadataValues) { value, _ in
+            HTMLModifier(target: .metadataValues) { value, _ in
                 "ModifiedValue-" + value
             }
         ])

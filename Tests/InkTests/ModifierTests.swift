@@ -13,7 +13,7 @@ final class ModifierTests: XCTestCase {
         var allMarkdown = [Substring]()
 
         let parser = MarkdownParser(modifiers: [
-            Modifier(target: .paragraphs) { html, markdown in
+            HTMLModifier(target: .paragraphs) { html, markdown in
                 allHTML.append(html)
                 allMarkdown.append(markdown)
                 return html
@@ -28,8 +28,8 @@ final class ModifierTests: XCTestCase {
 
     func testInitializingParserWithModifiers() {
         let parser = MarkdownParser(modifiers: [
-            Modifier(target: .links) { "LINK:" + $0.html },
-            Modifier(target: .inlineCode) { _ in "<em>Replacement</em>" }
+            HTMLModifier(target: .links) { "LINK:" + $0.html },
+            HTMLModifier(target: .inlineCode) { _ in "<em>Replacement</em>" }
         ])
 
         let html = parser.html(from: "Text [Link](url) `code`")
@@ -42,9 +42,9 @@ final class ModifierTests: XCTestCase {
 
     func testAddingModifiers() {
         var parser = MarkdownParser()
-        parser.addModifier(Modifier(target: .headings) { _ in "<h1>New heading</h1>" })
-        parser.addModifier(Modifier(target: .links) { "LINK:" + $0.html })
-        parser.addModifier(Modifier(target: .inlineCode) { _ in "Code" })
+        parser.addHTMLModifier(HTMLModifier(target: .headings) { _ in "<h1>New heading</h1>" })
+        parser.addHTMLModifier(HTMLModifier(target: .links) { "LINK:" + $0.html })
+        parser.addHTMLModifier(HTMLModifier(target: .inlineCode) { _ in "Code" })
 
         let html = parser.html(from: """
         # Heading
@@ -60,11 +60,11 @@ final class ModifierTests: XCTestCase {
     func testMultipleModifiersForSameTarget() {
         var parser = MarkdownParser()
 
-        parser.addModifier(Modifier(target: .codeBlocks) {
+        parser.addHTMLModifier(HTMLModifier(target: .codeBlocks) {
             " is cool:</p>" + $0.html
         })
 
-        parser.addModifier(Modifier(target: .codeBlocks) {
+        parser.addHTMLModifier(HTMLModifier(target: .codeBlocks) {
             "<p>Code" + $0.html
         })
 

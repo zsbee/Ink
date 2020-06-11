@@ -5,7 +5,7 @@
 */
 
 internal struct HorizontalLine: Fragment {
-    var modifierTarget: Modifier.Target { .horizontalLines }
+    var modifierTarget: Target { .horizontalLines }
 
     static func read(using reader: inout Reader) throws -> HorizontalLine {
         guard reader.currentCharacter.isAny(of: ["-", "*"]) else {
@@ -18,7 +18,7 @@ internal struct HorizontalLine: Fragment {
     }
 
     func html(usingURLs urls: NamedURLCollection,
-              modifiers: ModifierCollection) -> String {
+              modifiers: HTMLModifierCollection) -> String {
         "<hr>"
     }
 

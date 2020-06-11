@@ -5,7 +5,7 @@
 */
 
 internal struct Paragraph: Fragment {
-    var modifierTarget: Modifier.Target { .paragraphs }
+    var modifierTarget: Target { .paragraphs }
 
     private var text: FormattedText
 
@@ -14,7 +14,7 @@ internal struct Paragraph: Fragment {
     }
 
     func html(usingURLs urls: NamedURLCollection,
-              modifiers: ModifierCollection) -> String {
+              modifiers: HTMLModifierCollection) -> String {
         let body = text.html(usingURLs: urls, modifiers: modifiers)
         return "<p>\(body)</p>"
     }

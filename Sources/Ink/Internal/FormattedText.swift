@@ -26,7 +26,7 @@ internal struct FormattedText: Readable, HTMLConvertible, PlainTextConvertible {
     }
 
     func html(usingURLs urls: NamedURLCollection,
-              modifiers: ModifierCollection) -> String {
+              modifiers: HTMLModifierCollection) -> String {
         components.reduce(into: "") { string, component in
             switch component {
             case .linebreak:

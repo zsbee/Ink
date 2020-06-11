@@ -5,7 +5,7 @@
 */
 
 internal struct Heading: Fragment {
-    var modifierTarget: Modifier.Target { .headings }
+    var modifierTarget: Target { .headings }
     var level: Int
 
     private var text: FormattedText
@@ -20,7 +20,7 @@ internal struct Heading: Fragment {
     }
 
     func html(usingURLs urls: NamedURLCollection,
-              modifiers: ModifierCollection) -> String {
+              modifiers: HTMLModifierCollection) -> String {
         let body = stripTrailingMarkers(
             from: text.html(usingURLs: urls, modifiers: modifiers)
         )

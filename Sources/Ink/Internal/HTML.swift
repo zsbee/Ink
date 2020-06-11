@@ -5,7 +5,7 @@
 */
 
 internal struct HTML: Fragment {
-    var modifierTarget: Modifier.Target { .html }
+    var modifierTarget: Target { .html }
 
     private var string: Substring
 
@@ -52,7 +52,7 @@ internal struct HTML: Fragment {
     }
 
     func html(usingURLs urls: NamedURLCollection,
-              modifiers: ModifierCollection) -> String {
+              modifiers: HTMLModifierCollection) -> String {
         String(string)
     }
 

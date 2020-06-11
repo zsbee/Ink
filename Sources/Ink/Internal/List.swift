@@ -5,7 +5,7 @@
 */
 
 internal struct List: Fragment {
-    var modifierTarget: Modifier.Target { .lists }
+    var modifierTarget: Target { .lists }
 
     private var listMarker: Character
     private var kind: Kind
@@ -123,7 +123,7 @@ internal struct List: Fragment {
     }
 
     func html(usingURLs urls: NamedURLCollection,
-              modifiers: ModifierCollection) -> String {
+              modifiers: HTMLModifierCollection) -> String {
         let tagName: String
         let startAttribute: String
 
@@ -169,7 +169,7 @@ private extension List {
         var nestedList: List? = nil
 
         func html(usingURLs urls: NamedURLCollection,
-                  modifiers: ModifierCollection) -> String {
+                  modifiers: HTMLModifierCollection) -> String {
             let textHTML = text.html(usingURLs: urls, modifiers: modifiers)
             let listHTML = nestedList?.html(usingURLs: urls, modifiers: modifiers)
             return "<li>\(textHTML)\(listHTML ?? "")</li>"

@@ -15,20 +15,43 @@
 /// To customize how this parser performs its work, attach
 /// a `Modifier` using the `addModifier` method.
 public struct MarkdownParser {
-    private var modifiers: ModifierCollection
-
+    private var htmlModifiers: HTMLModifierCollection
+    private var fragmentModifiers: ModifierCollection
+    
+    public init() {
+        self.htmlModifiers = HTMLModifierCollection(modifiers: [])
+        self.fragmentModifiers = ModifierCollection(modifiers: [])
+    }
     /// Initialize an instance, optionally passing an array
     /// of modifiers used to customize the parsing process.
-    public init(modifiers: [Modifier] = []) {
-        self.modifiers = ModifierCollection(modifiers: modifiers)
+    public init(modifiers: [HTMLModifier] = []) {
+        self.htmlModifiers = HTMLModifierCollection(modifiers: modifiers)
+        self.fragmentModifiers = ModifierCollection(modifiers: [])
     }
+    
+    public init(modifiers: [Modifier] = []) {
+        self.htmlModifiers = HTMLModifierCollection(modifiers: [])
+        self.fragmentModifiers = ModifierCollection(modifiers: modifiers)
+    }
+
 
     /// Add a modifier to this parser, which can be used to
-    /// customize the parsing process. See `Modifier` for more info.
+    /// customize the parsing process. See `HTMLModifier` for more info.
+    public mutating func addHTMLModifier(_ modifier: HTMLModifier) {
+        htmlModifiers.insert(modifier)
+    }
+    
+    /// Add a modifier to this parser, which can be used to
+    /// customize the parsing process. See `HTMLModifier` for more info.
     public mutating func addModifier(_ modifier: Modifier) {
-        modifiers.insert(modifier)
+        fragmentModifiers.insert(modifier)
     }
 
+    
+    public func customData(from markdown: String) -> Any {
+        parse(markdown)
+    }
+    
     /// Convert a Markdown string into HTML, discarding any metadata
     /// found in the process. To preserve the Markdown's metadata,
     /// use the `parse` method instead.
@@ -40,6 +63,39 @@ public struct MarkdownParser {
     /// both the HTML representation of the given string, and also any
     /// metadata values found within it.
     public func parse(_ markdown: String) -> Markdown {
+        let fragmentsTuple = self.fragments(from: markdown)
+        let fragments = fragmentsTuple.fragments
+        let urlsByName = fragmentsTuple.urlsByName
+        let metadata = fragmentsTuple.metadata
+        let titleHeading = fragmentsTuple.titleHeading
+
+        let urls = NamedURLCollection(urlsByName: urlsByName)
+
+        let html = fragments.reduce(into: "") { result, wrapper in
+            let html = wrapper.fragment.html(
+                usingURLs: urls,
+                rawString: wrapper.rawString,
+                applyingModifiers: htmlModifiers
+            )
+
+            result.append(html)
+        }
+
+        return Markdown(
+            html: html,
+            titleHeading: titleHeading,
+            metadata: metadata?.values ?? [:]
+        )
+    }
+}
+
+private extension MarkdownParser {
+    struct ParsedFragment {
+        var fragment: Fragment
+        var rawString: Substring
+    }
+    
+    func fragments(from markdown: String) -> (fragments: [ParsedFragment], urlsByName: [String: URL], metadata: Metadata?, titleHeading: Heading?) {
         var reader = Reader(string: markdown)
         var fragments = [ParsedFragment]()
         var urlsByName = [String : URL]()
@@ -53,7 +109,7 @@ public struct MarkdownParser {
             do {
                 if metadata == nil, fragments.isEmpty, reader.currentCharacter == "-" {
                     if let parsedMetadata = try? Metadata.readOrRewind(using: &reader) {
-                        metadata = parsedMetadata.applyingModifiers(modifiers)
+                        metadata = parsedMetadata.applyingModifiers(htmlModifiers)
                         continue
                     }
                 }
@@ -80,33 +136,10 @@ public struct MarkdownParser {
                 fragments.append(paragraph)
             }
         }
-
-        let urls = NamedURLCollection(urlsByName: urlsByName)
-
-        let html = fragments.reduce(into: "") { result, wrapper in
-            let html = wrapper.fragment.html(
-                usingURLs: urls,
-                rawString: wrapper.rawString,
-                applyingModifiers: modifiers
-            )
-
-            result.append(html)
-        }
-
-        return Markdown(
-            html: html,
-            titleHeading: titleHeading,
-            metadata: metadata?.values ?? [:]
-        )
+        
+        return (fragments, urlsByName, metadata, titleHeading)
     }
-}
-
-private extension MarkdownParser {
-    struct ParsedFragment {
-        var fragment: Fragment
-        var rawString: Substring
-    }
-
+    
     func makeFragment(using closure: (inout Reader) throws -> Fragment,
                       reader: inout Reader) rethrows -> ParsedFragment {
         let startIndex = reader.currentIndex

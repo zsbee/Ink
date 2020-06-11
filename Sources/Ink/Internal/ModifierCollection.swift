@@ -1,17 +1,20 @@
-/**
-*  Ink
-*  Copyright (c) John Sundell 2019
-*  MIT license, see LICENSE file for details
-*/
+//
+//  File.swift
+//  
+//
+//  Created by Zsombor Fuszenecker on 2020. 06. 11..
+//
+
+import Foundation
 
 internal struct ModifierCollection {
-    private var modifiers: [Modifier.Target : [Modifier]]
+    private var modifiers: [Target : [Modifier]]
 
     init(modifiers: [Modifier]) {
         self.modifiers = Dictionary(grouping: modifiers, by: { $0.target })
     }
 
-    func applyModifiers(for target: Modifier.Target,
+    func applyModifiers(for target: Target,
                         using closure: (Modifier) -> Void) {
         modifiers[target]?.forEach(closure)
     }

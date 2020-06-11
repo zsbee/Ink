@@ -6,13 +6,13 @@
 
 internal protocol HTMLConvertible {
     func html(usingURLs urls: NamedURLCollection,
-              modifiers: ModifierCollection) -> String
+              modifiers: HTMLModifierCollection) -> String
 }
 
-extension HTMLConvertible where Self: Modifiable {
+extension HTMLConvertible where Self: HTMLModifiable {
     func html(usingURLs urls: NamedURLCollection,
               rawString: Substring,
-              applyingModifiers modifiers: ModifierCollection) -> String {
+              applyingModifiers modifiers: HTMLModifierCollection) -> String {
         var html = self.html(usingURLs: urls, modifiers: modifiers)
 
         modifiers.applyModifiers(for: modifierTarget) { modifier in

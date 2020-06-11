@@ -5,7 +5,7 @@
 */
 
 struct InlineCode: Fragment {
-    var modifierTarget: Modifier.Target { .inlineCode }
+    var modifierTarget: Target { .inlineCode }
 
     private var code: String
 
@@ -35,7 +35,7 @@ struct InlineCode: Fragment {
     }
 
     func html(usingURLs urls: NamedURLCollection,
-              modifiers: ModifierCollection) -> String {
+              modifiers: HTMLModifierCollection) -> String {
         return "<code>\(code)</code>"
     }
 

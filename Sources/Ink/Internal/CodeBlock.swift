@@ -4,15 +4,15 @@
 *  MIT license, see LICENSE file for details
 */
 
-internal struct CodeBlock: Fragment {
-    var modifierTarget: Target { .codeBlocks }
+public struct CodeBlock: Fragment {
+    public var modifierTarget: Target { .codeBlocks }
 
     private static let marker: Character = "`"
 
-    private var language: Substring
-    private var code: String
+    public var language: Substring
+    public var code: String
 
-    static func read(using reader: inout Reader) throws -> CodeBlock {
+    public static func read(using reader: inout Reader) throws -> CodeBlock {
         let startingMarkerCount = reader.readCount(of: marker)
         try require(startingMarkerCount >= 3)
         reader.discardWhitespaces()
@@ -47,18 +47,18 @@ internal struct CodeBlock: Fragment {
         return CodeBlock(language: language, code: code)
     }
 
-    func html(usingURLs urls: NamedURLCollection,
+    public func html(usingURLs urls: NamedURLCollection,
               modifiers: HTMLModifierCollection) -> String {
         let languageClass = language.isEmpty ? "" : " class=\"language-\(language)\""
         return "<pre><code\(languageClass)>\(code)</code></pre>"
     }
 
-    func plainText() -> String {
+    public func plainText() -> String {
         code
     }
     
     
-    func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
+    public func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
         return -1
     }
 }

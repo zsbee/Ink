@@ -4,12 +4,12 @@
 *  MIT license, see LICENSE file for details
 */
 
-struct InlineCode: Fragment {
-    var modifierTarget: Target { .inlineCode }
+public struct InlineCode: Fragment {
+    public var modifierTarget: Target { .inlineCode }
 
-    private var code: String
+    public var code: String
 
-    static func read(using reader: inout Reader) throws -> InlineCode {
+    public static func read(using reader: inout Reader) throws -> InlineCode {
         try reader.read("`")
         var code = ""
 
@@ -34,17 +34,17 @@ struct InlineCode: Fragment {
         throw Reader.Error()
     }
 
-    func html(usingURLs urls: NamedURLCollection,
+    public func html(usingURLs urls: NamedURLCollection,
               modifiers: HTMLModifierCollection) -> String {
         return "<code>\(code)</code>"
     }
 
-    func plainText() -> String {
+    public func plainText() -> String {
         code
     }
     
     
-    func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
+    public func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
         return -1
     }
 }

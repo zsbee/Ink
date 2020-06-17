@@ -5,13 +5,13 @@
 */
 
 public final class TextStyleMarker: Readable, HTMLConvertible {
-    var style: TextStyle
-    var rawMarkers: String
-    let characterRange: Range<String.Index>
-    var kind: Kind = .opening
-    var isValid = true
-    var prefix: Character?
-    var suffix: Character?
+    public var style: TextStyle
+    public var rawMarkers: String
+    public let characterRange: Range<String.Index>
+    public var kind: Kind = .opening
+    public var isValid = true
+    public var prefix: Character?
+    public var suffix: Character?
 
     private init(style: TextStyle, rawMarkers: String, characterRange: Range<String.Index>) {
         self.style = style
@@ -19,6 +19,11 @@ public final class TextStyleMarker: Readable, HTMLConvertible {
         self.characterRange = characterRange
     }
 
+    public enum Kind {
+        case opening
+        case closing
+    }
+    
     public static func read(using reader: inout Reader) throws -> Self {
         let startIndex = reader.currentIndex
 
@@ -69,12 +74,5 @@ public final class TextStyleMarker: Readable, HTMLConvertible {
         let prefix = self.prefix.map(String.init) ?? ""
         let suffix = self.suffix.map(String.init) ?? ""
         return prefix + leadingTag + style.htmlTagName + ">" + suffix
-    }
-}
-
-extension TextStyleMarker {
-    enum Kind {
-        case opening
-        case closing
     }
 }

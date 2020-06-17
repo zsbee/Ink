@@ -4,7 +4,7 @@
 *  MIT license, see LICENSE file for details
 */
 
-internal enum TextStyle {
+public enum TextStyle {
     case italic
     case bold
     case strikethrough

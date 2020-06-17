@@ -8,7 +8,7 @@ public struct Heading: Fragment {
     public var modifierTarget: Target { .headings }
     public var level: Int
 
-    private var text: FormattedText
+    public var text: FormattedText
 
     public static func read(using reader: inout Reader) throws -> Heading {
         let level = reader.readCount(of: "#")

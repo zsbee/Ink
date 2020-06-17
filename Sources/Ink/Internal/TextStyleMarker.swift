@@ -4,7 +4,7 @@
 *  MIT license, see LICENSE file for details
 */
 
-internal final class TextStyleMarker: Readable, HTMLConvertible {
+public final class TextStyleMarker: Readable, HTMLConvertible {
     var style: TextStyle
     var rawMarkers: String
     let characterRange: Range<String.Index>
@@ -19,7 +19,7 @@ internal final class TextStyleMarker: Readable, HTMLConvertible {
         self.characterRange = characterRange
     }
 
-    static func read(using reader: inout Reader) throws -> Self {
+    public static func read(using reader: inout Reader) throws -> Self {
         let startIndex = reader.currentIndex
 
         if reader.currentCharacter.isAny(of: .boldItalicStyleMarkers) {
@@ -55,7 +55,7 @@ internal final class TextStyleMarker: Readable, HTMLConvertible {
         )
     }
 
-    func html(usingURLs urls: NamedURLCollection,
+    public func html(usingURLs urls: NamedURLCollection,
               modifiers: HTMLModifierCollection) -> String {
         guard isValid else { return rawMarkers }
 

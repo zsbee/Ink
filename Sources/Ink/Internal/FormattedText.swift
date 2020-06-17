@@ -4,10 +4,10 @@
 *  MIT license, see LICENSE file for details
 */
 
-internal struct FormattedText: Readable, HTMLConvertible, PlainTextConvertible {
-    private var components = [Component]()
+public struct FormattedText: Readable, HTMLConvertible, PlainTextConvertible {
+    public var components = [Component]()
 
-    static func read(using reader: inout Reader) -> Self {
+    public static func read(using reader: inout Reader) -> Self {
         read(using: &reader, terminators: [])
     }
 
@@ -25,7 +25,7 @@ internal struct FormattedText: Readable, HTMLConvertible, PlainTextConvertible {
         return parser.text
     }
 
-    func html(usingURLs urls: NamedURLCollection,
+    public func html(usingURLs urls: NamedURLCollection,
               modifiers: HTMLModifierCollection) -> String {
         components.reduce(into: "") { string, component in
             switch component {
@@ -48,7 +48,7 @@ internal struct FormattedText: Readable, HTMLConvertible, PlainTextConvertible {
         }
     }
 
-    func plainText() -> String {
+    public func plainText() -> String {
         components.reduce(into: "") { string, component in
             switch component {
             case .linebreak:
@@ -69,7 +69,7 @@ internal struct FormattedText: Readable, HTMLConvertible, PlainTextConvertible {
     }
 }
 
-private extension FormattedText {
+public extension FormattedText {
     enum Component {
         case linebreak
         case text(Substring)

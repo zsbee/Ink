@@ -4,13 +4,13 @@
 *  MIT license, see LICENSE file for details
 */
 
-internal struct Heading: Fragment {
-    var modifierTarget: Target { .headings }
+public struct Heading: Fragment {
+    public var modifierTarget: Target { .headings }
     var level: Int
 
     private var text: FormattedText
 
-    static func read(using reader: inout Reader) throws -> Heading {
+    public static func read(using reader: inout Reader) throws -> Heading {
         let level = reader.readCount(of: "#")
         try require(level > 0 && level < 7)
         try reader.readWhitespaces()
@@ -19,7 +19,7 @@ internal struct Heading: Fragment {
         return Heading(level: level, text: text)
     }
 
-    func html(usingURLs urls: NamedURLCollection,
+    public func html(usingURLs urls: NamedURLCollection,
               modifiers: HTMLModifierCollection) -> String {
         let body = stripTrailingMarkers(
             from: text.html(usingURLs: urls, modifiers: modifiers)
@@ -29,12 +29,12 @@ internal struct Heading: Fragment {
         return "<\(tagName)>\(body)</\(tagName)>"
     }
 
-    func plainText() -> String {
+    public func plainText() -> String {
         stripTrailingMarkers(from: text.plainText())
     }
     
     
-    func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
+    public func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
         return -1
     }
 }

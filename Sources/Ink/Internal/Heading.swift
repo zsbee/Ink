@@ -6,7 +6,7 @@
 
 public struct Heading: Fragment {
     public var modifierTarget: Target { .headings }
-    var level: Int
+    public var level: Int
 
     private var text: FormattedText
 

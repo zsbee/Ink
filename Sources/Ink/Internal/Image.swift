@@ -7,7 +7,7 @@
 public struct Image: Fragment {
     public var modifierTarget: Target { .images }
 
-    private var link: Link
+    public var link: Link
 
     public static func read(using reader: inout Reader) throws -> Image {
         try reader.read("!")

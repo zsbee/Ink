@@ -84,7 +84,7 @@ parser.addModifier(Modifier(target: .lists, closure: { (fragment) -> Any in
     print(fragment)
 }))
 
-print(parser.customData(from: "- List\n  - Me\n- Listsecond\n  - Meotnana\n  - asjgajsgjkasg\n  - ansgasglasg\n- asjgajsgjkasgk"))
+print(parser.customData(from: "- [ ] List\n  - Me\n- [ ] Listsecond\n  - Meotnana\n  - asjgajsgjkasg\n  - ansgasglasg\n- [ ] asjgajsgjkasgk\n  - egy\n  - ketto\n- [ ] asf"))
 //print(parser.customData(from: "![image](https://i.picsum.photos/id/1011/5472/3648.jpg)"))
 //print(parser.customData(from: "# Heading with *formatting*"))
 //print(parser.customData(from: "Simple text with *formatting*"))

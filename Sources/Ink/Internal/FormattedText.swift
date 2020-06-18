@@ -6,7 +6,9 @@
 
 public struct FormattedText: Readable, HTMLConvertible, PlainTextConvertible {
     public var components = [Component]()
-
+    
+    public init() { }
+    
     public static func read(using reader: inout Reader) -> Self {
         read(using: &reader, terminators: [])
     }

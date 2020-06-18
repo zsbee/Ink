@@ -11,8 +11,8 @@ public struct List: Fragment {
     }
 
     public struct Item: HTMLConvertible {
-        var text: FormattedText
-        var nestedList: List? = nil
+        public var text: FormattedText
+        public var nestedList: List? = nil
         
         public func html(usingURLs urls: NamedURLCollection,
                   modifiers: HTMLModifierCollection) -> String {

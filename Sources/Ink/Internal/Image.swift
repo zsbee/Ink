@@ -4,17 +4,17 @@
 *  MIT license, see LICENSE file for details
 */
 
-internal struct Image: Fragment {
-    var modifierTarget: Target { .images }
+public struct Image: Fragment {
+    public var modifierTarget: Target { .images }
 
     private var link: Link
 
-    static func read(using reader: inout Reader) throws -> Image {
+    public static func read(using reader: inout Reader) throws -> Image {
         try reader.read("!")
         return try Image(link: .read(using: &reader))
     }
 
-    func html(usingURLs urls: NamedURLCollection,
+    public func html(usingURLs urls: NamedURLCollection,
               modifiers: HTMLModifierCollection) -> String {
         let url = link.target.url(from: urls)
         var alt = link.text.html(usingURLs: urls, modifiers: modifiers)
@@ -26,12 +26,12 @@ internal struct Image: Fragment {
         return "<img src=\"\(url)\"\(alt)/>"
     }
 
-    func plainText() -> String {
+    public func plainText() -> String {
         link.plainText()
     }
     
     
-    func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
+    public func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
         return -1
     }
 }

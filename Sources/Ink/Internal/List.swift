@@ -4,14 +4,14 @@
 *  MIT license, see LICENSE file for details
 */
 
-internal struct List: Fragment {
-    var modifierTarget: Target { .lists }
+public struct List: Fragment {
+    public var modifierTarget: Target { .lists }
 
     private var listMarker: Character
     private var kind: Kind
     private var items = [Item]()
 
-    static func read(using reader: inout Reader) throws -> List {
+    public static func read(using reader: inout Reader) throws -> List {
         try read(using: &reader, indentationLength: 0)
     }
 
@@ -122,7 +122,7 @@ internal struct List: Fragment {
         return list
     }
 
-    func html(usingURLs urls: NamedURLCollection,
+    public func html(usingURLs urls: NamedURLCollection,
               modifiers: HTMLModifierCollection) -> String {
         let tagName: String
         let startAttribute: String
@@ -148,7 +148,7 @@ internal struct List: Fragment {
         return "<\(tagName)\(startAttribute)>\(body)</\(tagName)>"
     }
 
-    func plainText() -> String {
+    public func plainText() -> String {
         var isFirst = true
 
         return items.reduce(into: "") { string, item in
@@ -162,7 +162,7 @@ internal struct List: Fragment {
         }
     }
     
-    func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
+    public func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
         return -1
     }
 }

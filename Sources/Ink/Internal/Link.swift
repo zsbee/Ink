@@ -4,13 +4,13 @@
 *  MIT license, see LICENSE file for details
 */
 
-internal struct Link: Fragment {
-    var modifierTarget: Target { .links }
+public struct Link: Fragment {
+    public var modifierTarget: Target { .links }
 
     var target: LTarget
     var text: FormattedText
 
-    static func read(using reader: inout Reader) throws -> Link {
+    public static func read(using reader: inout Reader) throws -> Link {
         try reader.read("[")
         let text = FormattedText.read(using: &reader, terminators: ["]"])
         try reader.read("]")
@@ -28,19 +28,19 @@ internal struct Link: Fragment {
         }
     }
 
-    func html(usingURLs urls: NamedURLCollection,
+    public func html(usingURLs urls: NamedURLCollection,
               modifiers: HTMLModifierCollection) -> String {
         let url = target.url(from: urls)
         let title = text.html(usingURLs: urls, modifiers: modifiers)
         return "<a href=\"\(url)\">\(title)</a>"
     }
 
-    func plainText() -> String {
+    public func plainText() -> String {
         text.plainText()
     }
     
     
-    func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
+    public func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
         return -1
     }
 }

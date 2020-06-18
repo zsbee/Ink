@@ -5,10 +5,15 @@
 */
 
 public struct Link: Fragment {
+    public enum LTarget {
+        case url(Substring)
+        case reference(Substring)
+    }
+    
     public var modifierTarget: Target { .links }
 
-    var target: LTarget
-    var text: FormattedText
+    public var target: LTarget
+    public var text: FormattedText
 
     public static func read(using reader: inout Reader) throws -> Link {
         try reader.read("[")
@@ -45,15 +50,8 @@ public struct Link: Fragment {
     }
 }
 
-extension Link {
-    enum LTarget {
-        case url(URL)
-        case reference(Substring)
-    }
-}
-
-extension Link.LTarget {
-    func url(from urls: NamedURLCollection) -> URL {
+public extension Link.LTarget {
+    func url(from urls: NamedURLCollection) -> Substring {
         switch self {
         case .url(let url):
             return url

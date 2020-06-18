@@ -5,11 +5,28 @@
 */
 
 public struct List: Fragment {
+    public enum Kind {
+        case unordered
+        case ordered(firstNumber: Int)
+    }
+
+    public struct Item: HTMLConvertible {
+        var text: FormattedText
+        var nestedList: List? = nil
+        
+        public func html(usingURLs urls: NamedURLCollection,
+                  modifiers: HTMLModifierCollection) -> String {
+            let textHTML = text.html(usingURLs: urls, modifiers: modifiers)
+            let listHTML = nestedList?.html(usingURLs: urls, modifiers: modifiers)
+            return "<li>\(textHTML)\(listHTML ?? "")</li>"
+        }
+    }
+    
     public var modifierTarget: Target { .lists }
 
-    private var listMarker: Character
-    private var kind: Kind
-    private var items = [Item]()
+    public var listMarker: Character
+    public var kind: Kind
+    public var items = [Item]()
 
     public static func read(using reader: inout Reader) throws -> List {
         try read(using: &reader, indentationLength: 0)
@@ -168,22 +185,5 @@ public struct List: Fragment {
 }
 
 private extension List {
-    struct Item: HTMLConvertible {
-        var text: FormattedText
-        var nestedList: List? = nil
-
-        func html(usingURLs urls: NamedURLCollection,
-                  modifiers: HTMLModifierCollection) -> String {
-            let textHTML = text.html(usingURLs: urls, modifiers: modifiers)
-            let listHTML = nestedList?.html(usingURLs: urls, modifiers: modifiers)
-            return "<li>\(textHTML)\(listHTML ?? "")</li>"
-        }
-    }
-
-    enum Kind {
-        case unordered
-        case ordered(firstNumber: Int)
-    }
-
     static let orderedListMarkers: Set<Character> = [".", ")"]
 }

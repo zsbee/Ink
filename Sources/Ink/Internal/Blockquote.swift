@@ -4,12 +4,12 @@
 *  MIT license, see LICENSE file for details
 */
 
-internal struct Blockquote: Fragment {
-    var modifierTarget: Target { .blockquotes }
+public struct Blockquote: Fragment {
+    public var modifierTarget: Target { .blockquotes }
 
-    private var text: FormattedText
+    public var text: FormattedText
 
-    static func read(using reader: inout Reader) throws -> Blockquote {
+    public static func read(using reader: inout Reader) throws -> Blockquote {
         try reader.read(">")
         try reader.readWhitespaces()
 
@@ -31,17 +31,17 @@ internal struct Blockquote: Fragment {
         return Blockquote(text: text)
     }
 
-    func html(usingURLs urls: NamedURLCollection,
+    public func html(usingURLs urls: NamedURLCollection,
               modifiers: HTMLModifierCollection) -> String {
         let body = text.html(usingURLs: urls, modifiers: modifiers)
         return "<blockquote><p>\(body)</p></blockquote>"
     }
 
-    func plainText() -> String {
+    public func plainText() -> String {
         text.plainText()
     }
     
-    func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
+    public func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
         return -1
     }
 }

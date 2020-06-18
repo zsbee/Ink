@@ -4,10 +4,10 @@
 *  MIT license, see LICENSE file for details
 */
 
-internal struct HorizontalLine: Fragment {
-    var modifierTarget: Target { .horizontalLines }
+public struct HorizontalLine: Fragment {
+    public var modifierTarget: Target { .horizontalLines }
 
-    static func read(using reader: inout Reader) throws -> HorizontalLine {
+    public static func read(using reader: inout Reader) throws -> HorizontalLine {
         guard reader.currentCharacter.isAny(of: ["-", "*"]) else {
             throw Reader.Error()
         }
@@ -17,19 +17,19 @@ internal struct HorizontalLine: Fragment {
         return HorizontalLine()
     }
 
-    func html(usingURLs urls: NamedURLCollection,
+    public func html(usingURLs urls: NamedURLCollection,
               modifiers: HTMLModifierCollection) -> String {
         "<hr>"
     }
 
-    func plainText() -> String {
+    public func plainText() -> String {
         // Since we want to strip all HTML from plain text output,
         // there is nothing to return here, just an empty string.
         ""
     }
     
     
-    func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
+    public func any(usingURLs urls: NamedURLCollection, modifiers: ModifierCollection) -> Any {
         return -1
     }
 }
